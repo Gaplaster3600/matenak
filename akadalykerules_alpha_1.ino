@@ -32,16 +32,16 @@ void loop()
       robotmozog.Forward();
       }
     else if (LSensor == HIGH && RSensor == LOW) {   //If the right sensor has a signal, turn left
-      robotmozog.Backward(1000);
+      robotmozog.Backward(750);
       robotmozog.Left(1000);
-      robotmozog.Forward(1000);
+      robotmozog.Forward(750);
       robotmozog.Right(1000);
       robotmozog.Forward();
       }
     else if (RSensor == HIGH && LSensor == LOW) {   //If the left sensor has a signal, turn right 
-      robotmozog.Backward(1000);
+      robotmozog.Backward(750);
       robotmozog.Right(1000);
-      robotmozog.Forward(1000);
+      robotmozog.Forward(750);
       robotmozog.Left(1000);
       robotmozog.Forward();
       }
