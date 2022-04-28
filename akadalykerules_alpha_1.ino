@@ -3,21 +3,21 @@
 int LSensorPin = 7;
 int RSensorPin = 8;
 
-int LSensor;              //Left Infrared Proximity Sensor signal value
-int RSensor;              //Right Infrared Proximity Sensor signal value
+int LSensor;              //Bal távolságérzékelő értéke
+int RSensor;              //Jobb távolságérzékelő értéke
 
 AlphaBot robotmozog = AlphaBot();
 
 void ProximityConfig()        //A pinek módjának beállítása
 {
-  pinMode(RSensorPin, INPUT);   //Define the input pin of Right Infrared Proximity Sensor
-  pinMode(LSensorPin, INPUT);   //Define the input pin of Left Infrared Proximity Sensor
+  pinMode(RSensorPin, INPUT);   //A bemenet és pin beállítása a jobb szenzornál 
+  pinMode(LSensorPin, INPUT);   //A bemenet és pin beállítása a bal szenzornál 
 }
 
 void setup()
 {
   ProximityConfig();
-  robotmozog.SetSpeed(100);
+  robotmozog.SetSpeed(150);
 }
 
 void loop()
@@ -25,27 +25,36 @@ void loop()
 
   {
   
-    RSensor = digitalRead(RSensorPin);            //LOW means signal, HIGH means no signal 
-    LSensor = digitalRead(LSensorPin);            //LOW means signal, HIGH means no signal 
+    RSensor = digitalRead(RSensorPin);            //LOW = van jel; HIGH = nincs jel 
+    LSensor = digitalRead(LSensorPin);            //LOW = van jel; HIGH = nincs jel 
     
-    if (LSensor == HIGH && RSensor == HIGH) {       //If no obstacle in front, run forward
+    if (LSensor == HIGH && RSensor == HIGH) {       //Ha nincs előtte akadály, menjen előre
       robotmozog.Forward();
       }
-    else if (LSensor == HIGH && RSensor == LOW) {   //If the right sensor has a signal, turn left
-      robotmozog.Backward(750);
-      robotmozog.Left(1000);
-      robotmozog.Forward(750);
-      robotmozog.Right(1000);
+    else if (LSensor == HIGH && RSensor == LOW) {   //Ha a jobb érzékelő kap jelet, forduljon balra
+      robotmozog.Backward(200);
+      robotmozog.Left(675);
+      robotmozog.Forward(550);
+      robotmozog.Right(450);
+      robotmozog.Forward(1250);
+      robotmozog.Right(450);
+      robotmozog.Forward(550);
+      robotmozog.Left(675);
       robotmozog.Forward();
       }
-    else if (RSensor == HIGH && LSensor == LOW) {   //If the left sensor has a signal, turn right 
-      robotmozog.Backward(750);
-      robotmozog.Right(1000);
-      robotmozog.Forward(750);
-      robotmozog.Left(1000);
+    else if (RSensor == HIGH && LSensor == LOW) {   //Ha a bal érzékelő kap jelet, forduljon jobbra 
+      robotmozog.Backward(200);
+      robotmozog.Right(675);
+      robotmozog.Forward(550);
+      robotmozog.Left(675);
+      robotmozog.Forward(1250);
+      robotmozog.Left(675);
+      robotmozog.Forward(550);
+      robotmozog.Right(675);
       robotmozog.Forward();
+      
       }
-    else                                          //Otherwise, Backward for 5ms and then turn left for 5ms
+    else                                          //Ellenkező esetben keressen másik utat
    {
       robotmozog.Backward();
       delay(5);
